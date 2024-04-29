@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 from uuid import UUID
 
 import requests
@@ -55,6 +56,7 @@ async def get_product_with_id(product_id: UUID):
     return product
 
 
+@lru_cache
 def get_tags(text):
     url = "https://api.aiforthai.in.th/tagsuggestion"
 

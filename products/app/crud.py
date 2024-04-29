@@ -13,11 +13,7 @@ async def get_products(category: str = None) -> List[Product]:
                 select(Product).where(Product.category == category)
             )
         else:
-            products = await session.scalars(
-                select(
-                    Product,
-                )
-            )
+            products = await session.scalars(select(Product))
     return products
 
 
