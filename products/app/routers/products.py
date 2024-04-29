@@ -52,6 +52,7 @@ async def get_product_with_id(product_id: UUID):
     product["images"] = [
         x["image"] for x in product_images if x["product_id"] == product["id"]
     ]
+    product["tags"] = get_tags(product["name"])
 
     return product
 
