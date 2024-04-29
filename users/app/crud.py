@@ -57,6 +57,16 @@ async def get_carts(user_id: UUID) -> List[Cart]:
     return cart_items
 
 
+async def delete_carts(user_id: UUID) -> List[Cart]:
+    async with get_async_session() as session:
+        cart_items = await session.scalars(
+            delete(Cart).where(Cart.user_id == user_id).returning(Cart)
+        )
+        await session.commit()
+
+    return cart_items
+
+
 async def create_new_cart_item(
     user_id: UUID, product_id: UUID, quantity: int
 ) -> List[Cart]:

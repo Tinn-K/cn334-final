@@ -33,7 +33,6 @@ async def get_all_products(category: str = None):
         initial_dict["images"] = [
             x["image"] for x in product_images if x["product_id"] == initial_dict["id"]
         ]
-        initial_dict["tags"] = get_tags(prod.name)
         result_dict["products"].append(initial_dict)
 
     return result_dict

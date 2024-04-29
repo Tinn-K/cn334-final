@@ -1,7 +1,13 @@
 from typing import Annotated
 from uuid import UUID
 
-from app.crud import create_new_cart_item, delete_cart, get_carts, modify_cart_quantity
+from app.crud import (
+    create_new_cart_item,
+    delete_cart,
+    delete_carts,
+    get_carts,
+    modify_cart_quantity,
+)
 from app.models.user import User
 from app.services.auth import get_current_user
 from fastapi import APIRouter, Depends, Form
@@ -15,6 +21,15 @@ async def get_all_cart_items(
     current_user: User = Depends(get_current_user),
 ):
     cart_items = await get_carts(current_user.id)
+
+    return {"carts": list(cart_items)}
+
+
+@router.delete("/carts")
+async def delete_all_cart_items(
+    current_user: User = Depends(get_current_user),
+):
+    cart_items = await delete_carts(current_user.id)
 
     return {"carts": list(cart_items)}
 
@@ -44,9 +59,9 @@ async def edit_quantity(
     return {"carts": list(cart_items)}
 
 
-@router.delete("/carts")
+@router.delete("/carts/{product_id}")
 async def delete_cart_item(
-    product_id: Annotated[UUID, Form()],
+    product_id: str,
     current_user: User = Depends(get_current_user),
 ):
     try:
