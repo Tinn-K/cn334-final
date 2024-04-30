@@ -69,4 +69,4 @@ async def delete_cart_item(
     except IntegrityError:
         return {"error": "Aleady deleted this product from cart."}
 
-    return {"carts": list(cart_items)}
+    return cart_items
